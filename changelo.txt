@@ -1,0 +1,102 @@
+zzt++ changelog
+
+version 0.8.47
+
++ mm.cpp:
+		Changed MM.ReadKeyboard(). Removed getch() and used _bios_keybrd().
+		Also added MM.ReadKeyboardModifiers() for reading shift status.
+		Moved some stuff from mm to ge and vice versa.
+
+version 0.8.46
+
++ ope.cpp:
+		ScootRight():have to move characters in entire canvas one position
+		to the right. should we reserve all characters on a line anyway?
+		we could also let walk go to p_used in stead of the end of line.
++ ope.cpp:
+		Removed dynamic memory allocation. Using fixed array of maximum text
+		length possible: Canvas[MAXTEXTLEN]. This has no effect on the
+		previous problem of course. Stupid to think that....
++ ope.cpp:
+		Changed ScootLeft() and ScootRight() to affect entire text. Can't
+		insert lines when on EOL characters.
++ ope.hpp:
+		changed the dotted line. it shown char 250 instead of 7 for the
+		dots. DottedLine[] was removed as class member and made into a
+		global constant.
++ ope.cpp:
+		"enter" is required twice at the end of a line. doesn't reach
+		code the first time. Special key anyway??
++ ope.cpp:
+		Fixed handling of setting and resetting special key indicator.
+		special wan't being reset for some key presses.
++ ope.cpp:
+		Fixed ScootLeft() to clear the last character in the text. For
+		every call a new copy of the last character would be left, usually
+		eol. It kept introducing ghost lines the cursor couldn't reach.
++ ope.cpp:
+		Fixed ScootRight() to work at RO_TEXT_X as well.
++ ope.cpp:
+		Going RIGHT at EOL now moves to the next line, unless at the end of
+		text. Going RIGHT at the end of text now goes to the beginning of the
+		last line in every conceivable case.
++ ope.hpp:
+		Added ABS2REL macro in order to translate from absolute to relative
+		coordinates based on LB_TEXT_X. Also added REL2ABS to perform the
+		opposite function. Created Horizontal and Vertical versions of both.
++ ope.cpp:
+		Applied translation macros where needed.
++ ope.cpp:
+		Fixed LEFT and RIGHT functions to work as they should: go to previous or
+		or next line and rotate on first and left lines.
++ ope.cpp:
+		Added insert toggle. Doesn't show on the screen yet. Should be a message
+		to MM.
++ zconst.hpp:
+		Added constants INSERT, DELETE and CTRL_Y (line delete) for ope.
++ ope.cpp:
+		Wrote code for character delete.
++ ope.cpp:
+		Fixed DrawCanvas() and ClearToEndOfLine() to make edit window moveable
+		and relative to LB_TEXT_X and LB_TEXT_Y.
++ ope.cpp:
+		Fixed DrawCanvas() to draw the top DottedLine correctly.
++ ope.cpp:
+		Wrote separate PerformBackspace() function because BACKSPACE and CTRL_Y
+		perform the same function. Now they share some code. Fixed a lingering
+		bug too: BACKSPACE forgot to decrease p_used after deleting the character.
+		RIGHT stumbled over it because it checks p_edpos<p_used to check if we're
+		at the end of the text.
++ ope.cpp:
+		Wrote CTRL_Y code. Needs screen cursor placement code.
++ ope.hpp:
+		Added comments
++ ope.cpp:
+		Added cursor positioning code and prepared code for regular use.
++ zzt.cpp:
+		Added comments.
++ mm.cpp:
+		Called OPE in MM.mainloop(), edit function.
++ bm.cpp:
+		Changes EnableCursor() in order to adjust cursor type. Needs work.
++ bm.cpp:
+		EnableCursor and DisableCursor work correctly. Disabling the cursor
+		using INT0x10, function 0x01 only works in full screen ms-dos mode.
++ bm.cpp:
+		Added EnableCursorBig() and ..Small(), removed EnableCursor()
++ ope.cpp:
+		Calling EnableCursorBig() now.
++ zzt.cpp:
+		Calling EnableCursorSmall() now.
++ ope.hpp
+		Added several constants for drawing the border
++ zzt.cpp
+		Moved music calls in main() to "demomus.txt" and #included it
++ ope.hpp
+		Moved the absolute position of the drawing area 2 positions to the right!
+		Can't believe I missed that.
++ ope.cpp
+		Changed ClearToEndOfLine() to compensate for the move to the right.
++ ope.hpp/ope.cpp
+		Added rudimentary code for adding a title to the edit window.
+
