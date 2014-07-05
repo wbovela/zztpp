@@ -1,6 +1,6 @@
 // ZZT++
 //
-// Copyright (C) 1998-2001 Wouter E.P. Bovelander
+// Copyright (C) 1998-2014 Wouter E.P. Bovelander
 //	wep@planetzztpp.com http://www.planetzztpp.com
 //
 // This program is free software; you can redistribute it and/or
